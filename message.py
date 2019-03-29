@@ -7,8 +7,8 @@ class Message(object):
                  frame_id,
                  name,
                  length,
-                 senders,  # TODO: implement multi senders
-                 signals,
+                 senders=None,  # TODO: implement multi senders
+                 signals=None,
                  comment=None,
                  send_type=None,
                  cycle_time=None,
@@ -18,8 +18,8 @@ class Message(object):
         self._frame_id = frame_id
         self._name = name
         self._length = length
-        self._senders = senders if senders else []
-        self._signals = signals
+        self._senders = senders or []
+        self._signals = signals or {}
         self._comment = comment
         self._send_type = send_type
         self._cycle_time = cycle_time

@@ -34,7 +34,7 @@ class Signal(object):
         self._minimum = minimum
         self._maximum = maximum
         self._unit = unit
-        self._receivers = [] if receivers is None else receivers
+        self._receivers = receivers or []
         self._initial = initial
         self._choices = choices
         self._comment = comment
