@@ -2,20 +2,6 @@
 import re
 import codecs
 
-"""
-BA_DEF_ BO_  "GenMsgCycleTime" INT 0 2000;
-BA_DEF_DEF_  "GenMsgCycleTime" 200;
-
-BA_DEF_ BO_  "GenMsgSendType" ENUM  "Cyclic","NoMsgSendType";
-BA_DEF_DEF_  "GenMsgSendType" "NoMsgSendType";
-
-BA_DEF_ BO_  "VFrameFormat" ENUM  "StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD";
-BA_DEF_DEF_  "VFrameFormat" "StandardCAN";
-
-BA_DEF_ SG_  "GenSigStartValue" INT 0 0;
-BA_DEF_DEF_  "GenSigStartValue" 0;
-"""
-
 
 class DBC(object):
     def __init__(self):
@@ -26,11 +12,7 @@ msg_attribute = {}
 sig_attribute = {}
 
 
-def scan_dbc(fname, _encoding='latin1'):
-    with codecs.open(fname, 'r', encoding=_encoding) as fd:
-        lines = fd.read().splitlines()
-    lines.append("EOF")
-
+def scan_dbc(lines):
     for line in lines:
         """GenMsgCycleTime
         """
@@ -81,8 +63,8 @@ def scan_dbc(fname, _encoding='latin1'):
             continue
 
 
-scan_dbc('../LCANFD.dbc')
-
-
 if __name__ == "__main__":
-    pass
+    with codecs.open('../LCANFD.dbc', 'r', encoding='latin1') as fd:
+        lines = fd.read().splitlines()
+        scan_dbc(lines)
+    # print(msg_attribute)
