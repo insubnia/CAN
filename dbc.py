@@ -3,16 +3,10 @@ import re
 import codecs
 
 
-class DBC(object):
-    def __init__(self):
-        pass
-
-
-msg_attribute = {}
-sig_attribute = {}
-
-
 def scan_dbc(lines):
+    msg_attribute = {}
+    sig_attribute = {}
+
     for line in lines:
         """GenMsgCycleTime
         """
@@ -62,9 +56,12 @@ def scan_dbc(lines):
             sig_attribute['GenSigStartValue']['Default'] = int(buf[1])
             continue
 
+    return msg_attribute, sig_attribute
+
 
 if __name__ == "__main__":
     with codecs.open('../LCANFD.dbc', 'r', encoding='latin1') as fd:
         lines = fd.read().splitlines()
-        scan_dbc(lines)
-    # print(msg_attribute)
+        msg_attr, sig_attr = scan_dbc(lines)
+    print(msg_attr)
+    print(sig_attr)
