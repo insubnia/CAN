@@ -39,11 +39,11 @@ class Message(object):
                      s._scale, s._offset, s._minimum, s._maximum), end=_end)
 
     def print_signal_list(self, print_name=True):
-        print(("<Message> %s (0x%03X)\n" % (self._name, self._frame_id) if print_name else "") +
+        print((f'<Message> {self._name} (0x{self._frame_id:03X})\n' if print_name else ""),
               '+' + '-' * 106 + '+\n'
               '| {:3} | {:34} | {:3} | {:8} | {:8} | {:6} | {:6} | {:6} | {:6} |\n'.
-              format("SB", "Name", "Len", "Endian", "Sign", "Factor", "Offset", "Min", "Max") +
-              '|' + '=' * 106 + '|')
+              format("SB", "Name", "Len", "Endian", "Sign", "Factor", "Offset", "Min", "Max"),
+              '|' + '=' * 106 + '|', sep='')
         for start_bit in sorted(self._signals):
             self.print_signal(start_bit)
         print('+' + '-' * 106 + '+' + '\n')
