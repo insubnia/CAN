@@ -4,19 +4,18 @@ import codecs
 
 
 def scan_dbc(lines):
-    msg_attribute = {}
-    sig_attribute = {}
+    msg_attr, sig_attr = {}, {}
 
     for line in lines:
         """GenMsgCycleTime
         """
         buf = re.search(r'BA_DEF_\s+BO_\s+"GenMsgCycleTime"\s+INT', line)
         if buf:
-            msg_attribute['GenMsgCycleTime'] = {}
+            msg_attr['GenMsgCycleTime'] = {}
             continue
         buf = re.search(r'BA_DEF_DEF_\s+"GenMsgCycleTime"\s+(\d+)', line)
-        if 'GenMsgCycleTime' in msg_attribute and buf:
-            msg_attribute['GenMsgCycleTime']['Default'] = int(buf[1])
+        if 'GenMsgCycleTime' in msg_attr and buf:
+            msg_attr['GenMsgCycleTime']['Default'] = int(buf[1])
             continue
 
         """GenMsgSendType
@@ -24,12 +23,12 @@ def scan_dbc(lines):
         buf = re.search(r'BA_DEF_\s+BO_\s+"GenMsgSendType"\s+ENUM\s+(.+);', line)
         if buf:
             enum = buf[1].replace('"', '').split(',')
-            msg_attribute['GenMsgSendType'] = {'ENUM': enum}
+            msg_attr['GenMsgSendType'] = {'ENUM': enum}
             continue
         buf = re.search(r'BA_DEF_DEF_\s+"GenMsgSendType"\s+"(\w+)"', line)
         if buf:
-            idx = msg_attribute['GenMsgSendType']['ENUM'].index(buf[1])
-            msg_attribute['GenMsgSendType']['Default'] = idx
+            idx = msg_attr['GenMsgSendType']['ENUM'].index(buf[1])
+            msg_attr['GenMsgSendType']['Default'] = idx
             continue
 
         """VFrameFormat
@@ -37,26 +36,26 @@ def scan_dbc(lines):
         buf = re.search(r'BA_DEF_\s+BO_\s+"VFrameFormat"\s+ENUM\s+(.+);', line)
         if buf:
             enum = buf[1].replace('"', '').split(',')
-            msg_attribute['VFrameFormat'] = {'ENUM': enum}
+            msg_attr['VFrameFormat'] = {'ENUM': enum}
             continue
         buf = re.search(r'BA_DEF_DEF_\s+"VFrameFormat"\s+"(\w+)"', line)
-        if 'VFrameFormat' in msg_attribute and buf:
-            idx = msg_attribute['VFrameFormat']['ENUM'].index(buf[1])
-            msg_attribute['VFrameFormat']['Default'] = idx
+        if 'VFrameFormat' in msg_attr and buf:
+            idx = msg_attr['VFrameFormat']['ENUM'].index(buf[1])
+            msg_attr['VFrameFormat']['Default'] = idx
             continue
 
         """GenSigStartValue
         """
         buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigStartValue"\s+INT', line)
         if buf:
-            sig_attribute['GenSigStartValue'] = {}
+            sig_attr['GenSigStartValue'] = {}
             continue
         buf = re.search(r'BA_DEF_DEF_\s+"GenSigStartValue"\s+(\d+);', line)
-        if 'GenSigStartValue' in sig_attribute and buf:
-            sig_attribute['GenSigStartValue']['Default'] = int(buf[1])
+        if 'GenSigStartValue' in sig_attr and buf:
+            sig_attr['GenSigStartValue']['Default'] = int(buf[1])
             continue
 
-    return msg_attribute, sig_attribute
+    return msg_attr, sig_attr
 
 
 if __name__ == "__main__":
