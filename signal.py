@@ -20,6 +20,7 @@ class Signal(object):
                  initial=None,
                  choices=None,
                  comment=None,
+                 send_type=None,
                  is_multiplexer=False,
                  multiplexer_ids=None,
                  multiplexer_signal=None,
@@ -38,6 +39,7 @@ class Signal(object):
         self._initial = initial
         self._choices = choices
         self._comment = comment
+        self._send_type = send_type
         self._is_multiplexer = is_multiplexer
         self._multiplexer_ids = multiplexer_ids
         self._multiplexer_signal = multiplexer_signal
