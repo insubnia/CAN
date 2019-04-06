@@ -1,5 +1,8 @@
 #!/usr/local/bin/python3
-from .signal import Signal
+try:
+    from .signal import Signal
+except Exception:
+    from signal import Signal
 
 
 class Message(object):
@@ -7,7 +10,7 @@ class Message(object):
                  frame_id,
                  name,
                  length,
-                 senders=None,  # TODO: implement multi senders
+                 senders=None,
                  signals=None,
                  comment=None,
                  send_type=None,
