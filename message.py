@@ -33,6 +33,12 @@ class Message(object):
     def add_signal(self, signal):
         self._signals[signal._start_bit] = signal
 
+    def get_signal_by_name(self, name):
+        for sig in self._signals.values():
+            if name == sig._name:
+                return sig
+        return None
+
     def print_signal(self, start_bit, _end='\n'):
         s = self._signals[start_bit]
         print('| {:3} | {:34} | {:3} | {:>8} | {:>8} | {:6g} | {:6g} | {:6g} | {:6g} |'.
