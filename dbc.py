@@ -46,7 +46,7 @@ def scan_dbc(lines):
 
         """GenSigSendType
         """
-        buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigSendType"\s+ENUM\s(.+);', line)
+        buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigSendType"\s+ENUM\s+(.+);', line)
         if buf:
             enum = buf[1].replace('"', '').split(',')
             sig_attr['GenSigSendType'] = {'ENUM': enum}
