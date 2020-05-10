@@ -3,11 +3,11 @@ import re
 import codecs
 
 
-def scan_dbc(lines):
+def get_attribute(lines):
     msg_attr, sig_attr = {}, {}
 
     for line in lines:
-        """GenMsgCycleTime
+        """ GenMsgCycleTime
         """
         buf = re.search(r'BA_DEF_\s+BO_\s+"GenMsgCycleTime"\s+INT', line)
         if buf:
@@ -18,7 +18,7 @@ def scan_dbc(lines):
             msg_attr['GenMsgCycleTime']['Default'] = int(buf[1])
             continue
 
-        """GenMsgSendType
+        """ GenMsgSendType
         """
         buf = re.search(r'BA_DEF_\s+BO_\s+"GenMsgSendType"\s+ENUM\s+(.+);', line)
         if buf:
@@ -31,7 +31,7 @@ def scan_dbc(lines):
             msg_attr['GenMsgSendType']['Default'] = idx
             continue
 
-        """VFrameFormat
+        """ VFrameFormat
         """
         buf = re.search(r'BA_DEF_\s+BO_\s+"VFrameFormat"\s+ENUM\s+(.+);', line)
         if buf:
@@ -44,7 +44,7 @@ def scan_dbc(lines):
             msg_attr['VFrameFormat']['Default'] = idx
             continue
 
-        """GenSigSendType
+        """ GenSigSendType
         """
         buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigSendType"\s+ENUM\s+(.+);', line)
         if buf:
@@ -57,7 +57,7 @@ def scan_dbc(lines):
             sig_attr['GenSigSendType']['Default'] = idx
             continue
 
-        """GenSigStartValue
+        """ GenSigStartValue
         """
         buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigStartValue"\s+INT', line)
         if buf:
@@ -72,8 +72,8 @@ def scan_dbc(lines):
 
 
 if __name__ == "__main__":
-    with codecs.open('../LCANFD.dbc', 'r', encoding='latin1') as fd:
+    with codecs.open('../CCANFD1.dbc', 'r', encoding='latin1') as fd:
         lines = fd.read().splitlines()
-        msg_attr, sig_attr = scan_dbc(lines)
+        msg_attr, sig_attr = get_attribute(lines)
     print(msg_attr)
     print(sig_attr)
