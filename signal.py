@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3
+import enum
 
 
 class Signal(object):
@@ -21,10 +22,10 @@ class Signal(object):
                  choices=None,
                  comment=None,
                  send_type=None,
+                 value_type=None,
                  is_multiplexer=False,
                  multiplexer_ids=None,
-                 multiplexer_signal=None,
-                 is_float=False):
+                 multiplexer_signal=None):
         self._start_bit = start_bit
         self._name = name
         self._length = length
@@ -40,7 +41,7 @@ class Signal(object):
         self._choices = choices
         self._comment = comment
         self._send_type = send_type
+        self._value_type = value_type
         self._is_multiplexer = is_multiplexer
         self._multiplexer_ids = multiplexer_ids
         self._multiplexer_signal = multiplexer_signal
-        self._is_float = is_float
