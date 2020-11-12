@@ -1,17 +1,17 @@
 #!/usr/local/bin/python3
-import enum
+from enum import Enum
 
 
 class Signal(object):
-    BIG_ENDIAN = 0
-    LITTLE_ENDIAN = 1
+    ByteOrder = Enum('ByteOrder', 'Motorola Intel')
+    ValueType = Enum('ValueType', 'Signed Unsigned Float Double')
 
     def __init__(self,
                  start_bit,
                  name,
                  length,
                  byte_order,
-                 is_signed,
+                 value_type,
                  scale,
                  offset,
                  minimum,
@@ -22,15 +22,17 @@ class Signal(object):
                  choices=None,
                  comment=None,
                  send_type=None,
-                 value_type=None,
                  is_multiplexer=False,
                  multiplexer_ids=None,
                  multiplexer_signal=None):
         self._start_bit = start_bit
         self._name = name
         self._length = length
-        self._byte_order = byte_order
-        self._is_signed = is_signed
+        if byte_order not in self.ByteOrder:
+            raise ValueError("Invalid Byte Order")
+        else:
+            self._byte_order = byte_order
+        self._value_type = value_type
         self._scale = scale
         self._offset = offset
         self._minimum = minimum
@@ -41,7 +43,11 @@ class Signal(object):
         self._choices = choices
         self._comment = comment
         self._send_type = send_type
-        self._value_type = value_type
         self._is_multiplexer = is_multiplexer
         self._multiplexer_ids = multiplexer_ids
         self._multiplexer_signal = multiplexer_signal
+
+
+if __name__ == '__main__':
+    print(Signal.ByteOrder.Intel)
+    print(Signal.ValueType.Double.value)
