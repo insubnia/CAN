@@ -34,7 +34,7 @@ class Message(object):
         self._signals[signal._start_bit] = signal
         return self._signals[signal._start_bit]
 
-    def get_signal_by_name(self, name):
+    def signal_by_name(self, name):
         for sig in self._signals.values():
             if name == sig._name:
                 return sig
