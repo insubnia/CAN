@@ -46,7 +46,7 @@ def get_attribute(lines):
 
         """ GenSigStartValue
         """
-        buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigStartValue"\s+INT', line)
+        buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigStartValue"\s+', line)
         if buf:
             sig_attr['GenSigStartValue'] = {}
             continue
