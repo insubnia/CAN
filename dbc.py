@@ -44,19 +44,6 @@ def get_attribute(lines):
             msg_attr['VFrameFormat']['Default'] = idx
             continue
 
-        """ GenSigSendType
-        """
-        buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigSendType"\s+ENUM\s+(.+);', line)
-        if buf:
-            enum = buf[1].replace('"', '').split(',')
-            sig_attr['GenSigSendType'] = {'ENUM': enum}
-            continue
-        buf = re.search(r'BA_DEF_DEF_\s+"GenSigSendType"\s+"(\w+)"', line)
-        if 'GenSigSendType' in sig_attr and buf:
-            idx = sig_attr['GenSigSendType']['ENUM'].index(buf[1])
-            sig_attr['GenSigSendType']['Default'] = idx
-            continue
-
         """ GenSigStartValue
         """
         buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigStartValue"\s+INT', line)
