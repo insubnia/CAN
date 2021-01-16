@@ -50,9 +50,9 @@ def get_attribute(lines):
         if buf:
             sig_attr['GenSigStartValue'] = {}
             continue
-        buf = re.search(r'BA_DEF_DEF_\s+"GenSigStartValue"\s+(\d+);', line)
+        buf = re.search(r'BA_DEF_DEF_\s+"GenSigStartValue"\s+(.+)\s*;', line)
         if 'GenSigStartValue' in sig_attr and buf:
-            sig_attr['GenSigStartValue']['Default'] = int(buf[1])
+            sig_attr['GenSigStartValue']['Default'] = float(buf[1])
             continue
 
     return msg_attr, sig_attr
