@@ -1,10 +1,14 @@
 #!/usr/local/bin/python3
+import sys
 from enum import Enum
 
 
 class Signal(object):
-    ByteOrder = Enum('ByteOrder', 'Motorola Intel')
-    ValueType = Enum('ValueType', 'Signed Unsigned Float Double')
+    class ByteOrder(Enum):
+        Motorola, Intel = range(2)
+
+    class ValueType(Enum):
+        Signed, Unsigned, Float, Double = range(4)
 
     def __init__(self,
                  start_bit,
@@ -28,11 +32,19 @@ class Signal(object):
         self._start_bit = start_bit
         self._name = name
         self._length = length
-        if byte_order not in self.ByteOrder:
-            raise ValueError("Invalid Byte Order")
-        else:
+
+        if isinstance(byte_order, self.ByteOrder):
             self._byte_order = byte_order
-        self._value_type = value_type
+        else:
+            print("Invalid Byte Order")
+            sys.exit()
+
+        if isinstance(value_type, self.ValueType):
+            self._value_type = value_type
+        else:
+            print("Ivalid Value Type")
+            sys.exit()
+
         self._scale = scale
         self._offset = offset
         self._minimum = minimum
