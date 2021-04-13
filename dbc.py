@@ -14,7 +14,7 @@ def get_attribute(lines):
         """
         buf = re.search(r'BA_DEF_\s+BO_\s+"GenMsgCycleTime"\s+INT', line)
         if buf:
-            class GenMsgCycleTime(Enum):
+            class GenMsgCycleTime(object):
                 def __init__(self):
                     self.default = None
             continue
@@ -53,7 +53,7 @@ def get_attribute(lines):
         """
         buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigStartValue"\s+', line)
         if buf:
-            class GenSigStartValue(Enum):
+            class GenSigStartValue(object):
                 def __init__(self):
                     self.default = None
             continue
