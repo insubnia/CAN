@@ -3,12 +3,12 @@ import re
 import codecs
 from enum import Enum
 
-GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigStartValue = None, None, None, None
+GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigSendType, GenSigStartValue = None, None, None, None, None
 
 
 def get_attribute(lines):
     for line in lines:
-        global GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigStartValue
+        global GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigSendType, GenSigStartValue
 
         """ GenMsgCycleTime
         """
@@ -49,6 +49,19 @@ def get_attribute(lines):
             VFrameFormat.default = VFrameFormat[buf[1]]
             continue
 
+        """ GenSigSendType
+        """
+        buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigSendType"\s+ENUM\s+(.+);', line)
+        if buf:
+            _list = buf[1].replace('"', '').replace(' ', '').split(',')
+            GenSigSendType = Enum('GenSigSendType', [(e, _list.index(e)) for e in set(_list)])
+            GenSigSendType.default = None
+            continue
+        buf = re.search(r'BA_DEF_DEF_\s+"GenSigSendType"\s+"(\w+)"', line)
+        if GenSigSendType and buf:
+            GenSigSendType.default = GenSigSendType[buf[1]]
+            continue
+
         """ GenSigStartValue
         """
         buf = re.search(r'BA_DEF_\s+SG_\s+"GenSigStartValue"\s+', line)
@@ -62,10 +75,10 @@ def get_attribute(lines):
             GenSigStartValue.default = float(buf[1])
             continue
 
-    return GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigStartValue
+    return GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigSendType, GenSigStartValue
 
 
 if __name__ == "__main__":
     with codecs.open('./DBCs/X50_ECAN.dbc', 'r', encoding='latin1') as fd:
         lines = fd.read().splitlines()
-        GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigStartValue = get_attribute(lines)
+        GenMsgCycleTime, GenMsgSendType, VFrameFormat, GenSigSendType, GenSigStartValue = get_attribute(lines)
